@@ -17,7 +17,7 @@ Let Create Front Matter Infomation for Jekyll in GUI Form!
 
 ## GUI Form
 
-![Front-end](/Users/kingtous/QtProject/NoteEasy/img/Front-end.png)
+![Front-end](img/Front-end.png)
 
 
 
