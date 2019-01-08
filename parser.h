@@ -9,8 +9,8 @@ class parser
 {
 public:
     parser();
-    void parseLayout(QLineEdit* line);
-    void parseBlogPosition(QLineEdit *line);
+    int parseLayout(QLineEdit* line);
+    int parseBlogPosition(QLineEdit *line);
     void parseTitle(QLineEdit *line);
     void parseSubTitle(QLineEdit* line);
     void parseHeaderImg(QLineEdit* line);

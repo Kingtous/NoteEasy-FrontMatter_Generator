@@ -25,58 +25,77 @@ parser::parser()
     this->outputHead="";
 }
 
-void parser::parseLayout(QLineEdit * line)
+int parser::parseLayout(QLineEdit * line)
 {
     this->Layout=line->text();
-    this->outputHead.append("layout: "+line->text()+'\n');
+    if(this->Layout.size()!=0)
+    {
+        this->outputHead.append("layout: "+line->text()+'\n');
+        return 0;
+    }
+    return -1;
 }
 
 void parser::parseAuthor(QLineEdit * line)
 {
     this->Layout=line->text();
-    this->outputHead.append("author: "+line->text()+'\n');
+    if(this->Layout.size()!=0)
+    {
+        this->outputHead.append("author: "+line->text()+'\n');
+    }
 }
 
 void parser::parseTitle(QLineEdit *line)
 {
     this->Title=line->text();
     this->FileName=line->text();
-    int pos=0;
-    while(Title.indexOf("\"",pos)!=-1)
+    if(this->Title.size()!=0)
     {
-        int index=Title.indexOf("\"",pos);
-        Title.insert(index,'\\');
-        pos=index+2;
+        int pos=0;
+        while(Title.indexOf("\"",pos)!=-1)
+        {
+            int index=Title.indexOf("\"",pos);
+            Title.insert(index,'\\');
+            pos=index+2;
+        }
+        this->outputHead.append("title: "+this->Title+'\n');
     }
-    this->outputHead.append("title: "+this->Title+'\n');
+
 }
 
-void parser::parseBlogPosition(QLineEdit *line)
+int parser::parseBlogPosition(QLineEdit *line)
 {
-    this->BlogPosition=line->text()+'/';
 
-    fstream Blog_write_position;
-    Blog_write_position.open("BlogPosition.txt",ios::out);
-    if(Blog_write_position)
+    this->BlogPosition=line->text();
+    if(this->BlogPosition!=0)
     {
-        Blog_write_position<<line->text().toStdString();
+        this->BlogPosition=this->BlogPosition+'/';
+        fstream Blog_write_position;
+        Blog_write_position.open("BlogPosition.txt",ios::out);
+        if(Blog_write_position)
+        {
+            Blog_write_position<<line->text().toStdString();
+        }
+        Blog_write_position.close();
+        return 0;
     }
-    Blog_write_position.close();
-
-    return;
+    return -1;
 }
 
 void parser::parseSubTitle(QLineEdit* line)
 {
     this->SubTitle=line->text();
-    int pos=0;
-    while(SubTitle.indexOf("\"",pos)!=-1)
+    if(this->SubTitle!=0)
     {
-        int index=this->SubTitle.indexOf("\"",pos);
-        this->SubTitle.insert(index,'\\');
-        pos=index+2;
+        int pos=0;
+        while(SubTitle.indexOf("\"",pos)!=-1)
+        {
+            int index=this->SubTitle.indexOf("\"",pos);
+            this->SubTitle.insert(index,'\\');
+            pos=index+2;
+        }
+        this->outputHead.append("subtitle: "+this->SubTitle+'\n');
     }
-    this->outputHead.append("subtitle: "+this->SubTitle+'\n');
 }
 
 void parser::parseHeaderImg(QLineEdit* line)
@@ -92,17 +111,29 @@ void parser::parseHeaderImg(QLineEdit* line)
         //拷贝到目录下
             QFile::copy(this->HeaderImg,this->BlogPosition+"img/unsorted/"+
                         FileName);
+            this->outputHead.append("header-img: img/unsorted/"+FileName+'\n');
 
     }
     //
-    this->outputHead.append("header-img: img/unsorted/"+FileName+'\n');
+    else {
+
+        int pos=this->BlogPosition.size();
+        QString abspath=this->HeaderImg.mid(pos);
+        this->outputHead.append("header-img: "+
+                                abspath
+                                +"\n");
+    }
+
     }
 }
 
 void parser::parseCatalog(QLineEdit *line)
 {
     this->Catalog=line->text();
-    this->outputHead.append("catalog: "+this->Catalog+'\n');
+    if(this->Catalog.size()!=0)
+    {
+        this->outputHead.append("catalog: "+this->Catalog+'\n');
+    }
 }
 
 void parser::parsetags(QLineEdit* line)
