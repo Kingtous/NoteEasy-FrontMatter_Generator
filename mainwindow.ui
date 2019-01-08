@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>NoteEasy V1.0</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="gridLayoutWidget">
@@ -58,7 +58,7 @@
      <item row="0" column="2">
       <widget class="QPushButton" name="BlogPositionBrowser">
        <property name="text">
-        <string>浏览</string>
+        <string>Browse..</string>
        </property>
       </widget>
      </item>
@@ -83,7 +83,11 @@
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="catalogEdit"/>
+      <widget class="QLineEdit" name="catalogEdit">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="label_4">
@@ -137,14 +141,28 @@
      <item row="5" column="2">
       <widget class="QPushButton" name="imgBrowser">
        <property name="text">
-        <string>浏览</string>
+        <string>Browse..</string>
        </property>
       </widget>
      </item>
      <item row="8" column="1">
       <widget class="QPushButton" name="Start">
        <property name="text">
-        <string>确定</string>
+        <string>OK. Let's Start!</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Open Post</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="2">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Open BlogPosition</string>
        </property>
       </widget>
      </item>

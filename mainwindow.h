@@ -7,6 +7,8 @@
 #include <QFileDialog>
 #include <QWidget>
 #include <QProcess>
+#include <QToolTip>
+#include <QPoint>
 
 #include <fstream>
 
@@ -34,6 +36,12 @@ private slots:
 
     void on_imgBrowser_clicked();
 
+
+    void on_tagsEdit_cursorPositionChanged(int arg1, int arg2);
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
 

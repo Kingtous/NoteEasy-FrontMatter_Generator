@@ -66,3 +66,27 @@ void MainWindow::on_imgBrowser_clicked()
     ui->imgEdit->setText(Dir);
 }
 
+
+void MainWindow::on_tagsEdit_cursorPositionChanged(int arg1, int arg2)
+{
+    QPoint point=ui->tagsEdit->pos();
+    QToolTip::showText(point,"Split tags by space.");
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QString pos=ui->BlogPositionEdit->text();
+    if(pos.size()!=0)
+    {
+        QProcess::startDetached("open "+ui->BlogPositionEdit->text()+"/_posts");
+    }
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QString pos=ui->BlogPositionEdit->text();
+    if(pos.size()!=0)
+    {
+        QProcess::startDetached("open "+ui->BlogPositionEdit->text());
+    }
+}

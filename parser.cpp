@@ -1,8 +1,4 @@
 #include "parser.h"
-#include <QStringList>
-#include <QFile>
-#include <QTime>
-#include <fstream>
 using namespace std;
 /*
  *

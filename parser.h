@@ -3,7 +3,10 @@
 
 #include <QLineEdit>
 #include <QString>
-
+#include <QStringList>
+#include <QFile>
+#include <QTime>
+#include <fstream>
 
 class parser
 {
