@@ -1,9 +1,8 @@
 # NoteEasy-FrontMatter_Generator
-Got Mad in Command Line Or Editing Front Matter?
+Jekyll文档前缀信息填写器，自动生成文档模板，让您更专注于文档书写
 
-Let Create Front Matter Infomation for Jekyll in GUI Form!
-
-
+- Got Mad in Command Line Or Editing Front Matter?
+    - Let Create Front Matter Infomation for Jekyll in GUI Form!
 
 ## Character
 
@@ -23,6 +22,6 @@ Let Create Front Matter Infomation for Jekyll in GUI Form!
 
 ## Environment Passing
 
-- macOS mojave 10.14.2
-- Qt 5.12.0
-- Qt Creater 4.8.0
+- macOS mojave 10.15.2
+- Qt 5.14.0
+- Qt Creater 4.11.0
