@@ -1,4 +1,5 @@
 #include "parser.h"
+
 using namespace std;
 /*
  *
@@ -65,14 +66,21 @@ int parser::parseBlogPosition(QLineEdit *line)
     this->BlogPosition=line->text();
     if(this->BlogPosition!=0)
     {
+        QString pos = this->BlogPosition;
         this->BlogPosition=this->BlogPosition+'/';
-        fstream Blog_write_position;
-        Blog_write_position.open("BlogPosition.txt",ios::out);
-        if(Blog_write_position)
-        {
-            Blog_write_position<<line->text().toStdString();
+
+        QString str=QDir::homePath();
+        QFile* configFile = new QFile();
+        configFile->setFileName(str+"/.blogPosition.cfg");
+        // 写入配置
+        bool openFlag = configFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
+        if (!openFlag){
+            return -1;
+        } else {
+            QTextStream textStream(configFile);
+            textStream << pos;
         }
-        Blog_write_position.close();
+        configFile->close();
         return 0;
     }
     return -1;
@@ -97,29 +105,27 @@ void parser::parseSubTitle(QLineEdit* line)
 void parser::parseHeaderImg(QLineEdit* line)
 {
     this->HeaderImg=line->text();
-    if(!this->HeaderImg.size()==0)
+    if(this->HeaderImg.size()!=0)
     {
-    //判断是否在position下
-    QStringList list=this->HeaderImg.split('/');
-    QString FileName=list[list.size()-1];
-    if(!this->HeaderImg.startsWith(this->BlogPosition))
-    {
-        //拷贝到目录下
-            QFile::copy(this->HeaderImg,this->BlogPosition+"img/unsorted/"+
-                        FileName);
-            this->outputHead.append("header-img: img/unsorted/"+FileName+'\n');
+        //判断是否在position下
+        QStringList list=this->HeaderImg.split('/');
+        QString FileName=list[list.size()-1];
+        if(!this->HeaderImg.startsWith(this->BlogPosition))
+        {
+            //拷贝到目录下
+                QFile::copy(this->HeaderImg,this->BlogPosition+"img/unsorted/"+
+                            FileName);
+                this->outputHead.append("header-img: img/unsorted/"+FileName+'\n');
+        }
+        //
+        else {
 
-    }
-    //
-    else {
-
-        int pos=this->BlogPosition.size();
-        QString abspath=this->HeaderImg.mid(pos);
-        this->outputHead.append("header-img: "+
-                                abspath
-                                +"\n");
-    }
-
+            int pos=this->BlogPosition.size();
+            QString abspath=this->HeaderImg.mid(pos);
+            this->outputHead.append("header-img: "+
+                                    abspath
+                                    +"\n");
+        }
     }
 }
 
@@ -158,7 +164,7 @@ void parser::FinalParse()
     this->outputHead="---\n"+this->outputHead+"---\n";
 }
 
-void parser::output()
+QString parser::output()
 {
     QDateTime current_date_time =QDateTime::currentDateTime();
     QString current_date =current_date_time.toString("yyyy-MM-dd");
@@ -167,4 +173,6 @@ void parser::output()
     ofstream output(storePos);
     output<<this->outputHead.toStdString();
     output.close();
+
+    return QString::fromStdString(storePos);
 }

@@ -9,6 +9,9 @@
 #include <QProcess>
 #include <QToolTip>
 #include <QPoint>
+#include <QStandardPaths>
+#include <QDebug>
+#include <QSysInfo>
 
 #include <fstream>
 
