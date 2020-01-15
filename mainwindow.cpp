@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDir>
+#include <QMessageBox>
 
 using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
@@ -16,15 +18,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //read content
     fstream Blog_read_position;
-    Blog_read_position.open("BlogPosition.txt",ios::in);
-    if(Blog_read_position)
-    {
-        string str;
-        Blog_read_position>>str;
-        ui->BlogPositionEdit->setText(QString::fromStdString(str));
+    QMessageBox box;
+    // 获取引用的配置路径，写在Home目录下，.为隐藏文件
+    QString str=QDir::homePath();
+    qDebug() << str;
+    QFile* configFile = new QFile();
+    configFile->setFileName(str+"/.blogPosition.cfg");
+    // 读取配置
+    bool openFlag = configFile->open(QIODevice::ReadOnly | QIODevice::Text);
+    if (!openFlag){
+        return;
+    } else {
+        QTextStream textStream(configFile);
+        QString leastFolder = textStream.readLine();
+        ui->BlogPositionEdit->setText(leastFolder);
     }
-    Blog_read_position.close();
-
+    configFile->close();
 }
 
 MainWindow::~MainWindow()
@@ -49,9 +58,17 @@ void MainWindow::on_Start_clicked()
     par.parsetags(ui->tagsEdit);
     par.FinalParse();
     //parse store file
-    par.output();
+    QString storeFullPath = par.output();
     //open Directory
-    QProcess::startDetached("open "+par.BlogPosition+"_posts/");
+    // 判断操作系统
+    if (QSysInfo::kernelType()[0] == 'w'){
+        // Windows System，直接当前文件
+        QProcess::startDetached(storeFullPath);
+    } else {
+        // Unix Or Linux System, 使用open函数打开文件
+        QProcess::startDetached("open "+storeFullPath);
+    }
+
 }
 
 void MainWindow::on_BlogPositionBrowser_clicked()

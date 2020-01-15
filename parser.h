@@ -7,6 +7,9 @@
 #include <QFile>
 #include <QTime>
 #include <fstream>
+#include <QMessageBox>
+#include <QDir>
+#include <QTextStream>
 
 class parser
 {
@@ -22,7 +25,7 @@ public:
     void parsetime();
     void parseAuthor(QLineEdit * line);
     void FinalParse();
-    void output();
+    QString output();
     //
     QString Layout;
     QString BlogPosition;
