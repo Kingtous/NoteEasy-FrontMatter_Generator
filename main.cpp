@@ -1,3 +1,6 @@
+// Author: Kingtous
+// Version: 1.2
+
 #include "mainwindow.h"
 #include <QApplication>
 
